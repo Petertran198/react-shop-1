@@ -1,10 +1,10 @@
-import React from 'react';
-import useSectionList from './useSectionList';
+import React, { useState } from 'react';
 import MenuItem from '../menu-item/MenuItem';
 import './directory.scss';
+import SECTION_LIST from './SectionData';
 const Directory = () => {
-    //use custom hook to shorten code and not display the array of section objects, aka hats, mens, women
-    const [sections, setSections] = useSectionList();
+    //SECTION_LIST is used to shorten code and not display the array of section objects, aka hats, mens, women
+    const [sections, setSections] = useState(SECTION_LIST);
     return (
         <div className='directory-menu'>
             {sections.map((section) => (
