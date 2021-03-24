@@ -13,6 +13,7 @@ const Directory = () => {
                     title={section.title}
                     imageUrl={section.imageUrl}
                     size={section.size}
+                    linkUrl={section.linkUrl}
                 />
             ))}
         </div>
