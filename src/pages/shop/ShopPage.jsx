@@ -11,7 +11,7 @@ const ShopPage = () => {
                 return (
                     <CollectionPreview
                         key={categoryItem.id}
-                        title='random'
+                        title={categoryItem.title}
                         items={categoryItem.items}
                     />
                 );
