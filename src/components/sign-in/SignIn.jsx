@@ -1,6 +1,7 @@
 import React from 'react';
 import useForm from '../../custom-hooks/useForm';
-
+import FormInput from '../form-input/FormInput';
+import './signIn.scss';
 const SignIn = () => {
     const [email, setEmail, resetEmail] = useForm('');
     const [password, setPassword, resetPassword] = useForm('');
@@ -15,22 +16,22 @@ const SignIn = () => {
             <h2>I already have an account</h2>
             <span>Sign In with your email and password</span>
             <form>
-                <input
+                <FormInput
                     name='email'
                     type='email'
                     value={email}
                     required
-                    onChange={setEmail}
+                    handleChange={setEmail}
+                    label='Email'
                 />
-                <label>Email</label>
-                <input
+                <FormInput
                     name='password'
                     type='password'
                     value={password}
                     required
-                    onChange={setPassword}
+                    handleChange={setPassword}
+                    label='Password'
                 />
-                <label>Password</label>
                 <input type='submit' value='submit' />
             </form>
         </div>
