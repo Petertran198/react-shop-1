@@ -1,5 +1,6 @@
 import React from 'react';
 import useForm from '../../custom-hooks/useForm';
+import Button from '../button/Button';
 import FormInput from '../form-input/FormInput';
 import './signIn.scss';
 const SignIn = () => {
@@ -32,7 +33,9 @@ const SignIn = () => {
                     handleChange={setPassword}
                     label='Password'
                 />
-                <input type='submit' value='submit' />
+                <Button type='submit' value='submit'>
+                    Sign In
+                </Button>
             </form>
         </div>
     );
