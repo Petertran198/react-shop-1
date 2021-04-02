@@ -1,9 +1,6 @@
 import React from 'react';
 import './button.scss';
 const Button = ({ children, ...allOtherProps }) => {
-    console.log('children: ', children);
-    console.log('otherProps: ', allOtherProps);
-
     return (
         <button className='custom-button' {...allOtherProps}>
             {/* children represents - anything inside/between the component's tags. aka their children 

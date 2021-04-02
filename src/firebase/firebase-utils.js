@@ -16,16 +16,15 @@ const config = {
 
 firebase.initializeApp(config);
 // Got from pulling in the firebase/auth services & firebase/firestore
-// gonna export this out whenever u need to references the  Authentication service or Cloud Firestore services
-
+// gonna export this out whenever u need to references this Authentication service or Cloud Firestore services
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-//create a  google auth provider which takes in a parameter to allow the option to select which account to signin to
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
-//Export a method got from auth which is signInWithPopup.
-//This method takes in a param of which popup provider to signin to and allow authentication with that provider
-// aka a method to signInWithGoogle
-export const signWithGoogle = () => auth.signInWithPopup(provider);
 
-export default firebase;
+export function signWithGoogle() {
+    //Create a new instance of firebase provider
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    //This method takes in a param of which popup provider to signin to and allow authentication with that provider
+    // aka a method to signInWithGoogle
+    return auth.signInWithPopup(provider);
+}
