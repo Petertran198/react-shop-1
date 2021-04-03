@@ -4,12 +4,15 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider, useAuth } from './firebase/AuthContext';
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <AuthProvider>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </AuthProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

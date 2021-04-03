@@ -18,4 +18,15 @@
         color: black;
         border: 1px solid black;
     }
+    &.google-sign-in {
+        background: #4285f4;
+        color: #fff;
+        width: 190px;
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+        white-space: nowrap;
+        &:hover {
+            background: #3a79df;
+            border: none;
+        }
+    }
 }

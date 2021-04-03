@@ -28,3 +28,7 @@ export function signWithGoogle() {
     // aka a method to signInWithGoogle
     return auth.signInWithPopup(provider);
 }
+
+export function signOut() {
+    return auth.signOut();
+}
