@@ -2,9 +2,9 @@ import React from 'react';
 import useForm from '../../custom-hooks/useForm';
 import Button from '../button/Button';
 import FormInput from '../form-input/FormInput';
-import { signWithGoogle, logout } from '../../firebase/firebase-utils';
+import { signWithGoogle } from '../../firebase/firebase-utils';
 import './signIn.scss';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../firebase/AuthContext';
 
 const SignIn = (props) => {
@@ -18,10 +18,7 @@ const SignIn = (props) => {
         resetEmail();
         resetPassword();
     };
-    const googleSignIn = () => {
-        signWithGoogle().then(history.push('./'));
-    };
-
+    console.log(signWithGoogle);
     return (
         <div className='sign-in' onSubmit={handleSubmit}>
             <h2>I already have an account</h2>
@@ -47,8 +44,8 @@ const SignIn = (props) => {
                     <Button type='submit' value='submit'>
                         Sign In
                     </Button>
-                    <Button onClick={googleSignIn} isGoogleBtn={true}>
-                        Google Auth
+                    <Button isGoogleBtn={true} onClick={signWithGoogle}>
+                        Google Auth{' '}
                     </Button>
                 </div>
             </form>

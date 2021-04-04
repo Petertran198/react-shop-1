@@ -6,17 +6,28 @@ import ShopPage from './pages/shop/ShopPage';
 import Header from './components/header/Header';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
 import { useAuth } from './firebase/AuthContext';
-
+import PublicRoute from './routes/PublicRoute';
 function App() {
     const { currentUser } = useAuth();
+    console.log(currentUser);
     return (
         <>
             <Header currentUser={currentUser} />
             <Switch>
                 {/* Have access to route prop object(history, location, match) */}
-                <Route exact path='/' component={Homepage} />
+                <PublicRoute
+                    restricted={false}
+                    exact
+                    path='/'
+                    component={Homepage}
+                />
                 <Route exact path='/shop' component={ShopPage} />
-                <Route exact path='/sign-in' component={SignInAndSignUp} />
+                <PublicRoute
+                    restricted={true}
+                    component={SignInAndSignUp}
+                    path='/sign-in'
+                    exact
+                />
             </Switch>
         </>
     );

@@ -18,10 +18,22 @@ const Header = (props) => {
                 <Link className='option' to='./shop'>
                     Contact
                 </Link>
+
                 {props.currentUser ? (
-                    <Link className='option' onClick={signOut}>
-                        Sign Out
-                    </Link>
+                    <div className='option drop-down'>
+                        <div className='dropdown-title'>
+                            Welcome {props.currentUser.displayName}
+                        </div>
+                        <div className='dropdown-content'>
+                            <Link
+                                to='./sign-in'
+                                className='dropdown-link'
+                                onClick={signOut}
+                            >
+                                Sign Out
+                            </Link>
+                        </div>
+                    </div>
                 ) : (
                     <Link className='option' to='./sign-in'>
                         Sign In

@@ -26,7 +26,7 @@ export function signWithGoogle() {
     provider.setCustomParameters({ prompt: 'select_account' });
     //This method takes in a param of which popup provider to signin to and allow authentication with that provider
     // aka a method to signInWithGoogle
-    return auth.signInWithPopup(provider);
+    return auth.signInWithRedirect(provider);
 }
 
 export function signOut() {
