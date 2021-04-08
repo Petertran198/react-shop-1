@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useForm from '../../custom-hooks/useForm';
 import Button from '../button/Button';
 import FormInput from '../form-input/FormInput';
 import { signWithGoogle } from '../../firebase/firebase-utils';
 import './signIn.scss';
-import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../firebase/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 const SignIn = (props) => {
-    const history = useHistory();
+    let history = useHistory();
     const { currentUser } = useAuth();
     const [email, setEmail, resetEmail] = useForm('');
     const [password, setPassword, resetPassword] = useForm('');
+
     console.log();
     const handleSubmit = (e) => {
         e.preventDefault();
         resetEmail();
         resetPassword();
     };
-    console.log(signWithGoogle);
+
+    const handleGoogle = (callback) => {
+        signWithGoogle();
+    };
     return (
         <div className='sign-in' onSubmit={handleSubmit}>
             <h2>I already have an account</h2>
@@ -44,7 +48,7 @@ const SignIn = (props) => {
                     <Button type='submit' value='submit'>
                         Sign In
                     </Button>
-                    <Button isGoogleBtn={true} onClick={signWithGoogle}>
+                    <Button isGoogleBtn={true} onClick={handleGoogle}>
                         Google Auth{' '}
                     </Button>
                 </div>

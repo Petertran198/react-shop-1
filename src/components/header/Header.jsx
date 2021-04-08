@@ -12,6 +12,9 @@ const Header = (props) => {
                 <Logo className='logo' />
             </Link>
             <div className='options'>
+                <Link className='option' to='./'>
+                    Categories
+                </Link>
                 <Link className='option' to='./shop'>
                     Shop
                 </Link>
@@ -22,7 +25,9 @@ const Header = (props) => {
                 {props.currentUser ? (
                     <div className='option drop-down'>
                         <div className='dropdown-title'>
-                            Welcome {props.currentUser.displayName}
+                            {/* capitalized Name */}
+                            {props.currentUser.displayName.toUpperCase()[0] +
+                                props.currentUser.displayName.slice(1)}
                         </div>
                         <div className='dropdown-content'>
                             <Link

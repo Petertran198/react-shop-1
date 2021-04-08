@@ -20,6 +20,36 @@ firebase.initializeApp(config);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
+//function to get back the auth object from the auth library and store it in firebase database
+//Made async because waiting to fetching login infomation via google oauth
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    //If no user obj was found, just exit
+    if (!userAuth) return;
+    //Retrieve the account obj  Reference first because in order to perform CRUD method in firebase u must first get the documentRef
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    //Then get the account info associated with that with .get()
+    const snapShot = await userRef.get();
+    //If the account info  was not found inside firebase db then store it
+    //because it is a new user that firebase firestore did not add in yet
+    //.exists is a property of the snapShot object that tells us if there is data for that "user"
+    if (!snapShot.exists) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+        //Using our account Reference obj, which allow us to perform CRUD action, we can save an instance of this in our firestore nosql db
+        try {
+            userRef.set({
+                displayName,
+                email,
+                createdAt,
+                ...additionalData,
+            });
+        } catch (error) {
+            console.log('error.....', error.message);
+        }
+    }
+    return userRef;
+};
+
 export function signWithGoogle() {
     //Create a new instance of firebase provider
     const provider = new firebase.auth.GoogleAuthProvider();
