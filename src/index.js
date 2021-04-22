@@ -4,7 +4,7 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider, useAuth } from './firebase/AuthContext';
+import { AuthProvider } from './firebase/AuthContext';
 
 ReactDOM.render(
     <React.StrictMode>

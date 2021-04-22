@@ -8,11 +8,9 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
 import { useAuth } from './firebase/AuthContext';
 import PublicRoute from './routes/PublicRoute';
 function App() {
-    const { currentUser } = useAuth();
-    console.log(currentUser);
     return (
         <>
-            <Header currentUser={currentUser} />
+            <Header />
             <Switch>
                 {/* Have access to route prop object(history, location, match) */}
                 <PublicRoute

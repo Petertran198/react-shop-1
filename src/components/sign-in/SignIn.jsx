@@ -13,15 +13,15 @@ const SignIn = (props) => {
     const [email, setEmail, resetEmail] = useForm('');
     const [password, setPassword, resetPassword] = useForm('');
 
-    console.log();
     const handleSubmit = (e) => {
         e.preventDefault();
         resetEmail();
         resetPassword();
     };
 
-    const handleGoogle = (callback) => {
-        signWithGoogle();
+    const handleGoogle = async () => {
+        await signWithGoogle();
+        history.push('/');
     };
     return (
         <div className='sign-in' onSubmit={handleSubmit}>

@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 //Also pull in these two services for db and auth services
 import 'firebase/auth';
 import 'firebase/firestore';
+import { useHistory } from 'react-router';
 
 // Firebase app config details
 const config = {
@@ -21,7 +22,7 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 //function to get back the auth object from the auth library and store it in firebase database
-//Made async because waiting to fetching login infomation via google oauth
+//Made async because waiting to fetching login infomation
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     //If no user obj was found, just exit
     if (!userAuth) return;
@@ -34,10 +35,11 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     //.exists is a property of the snapShot object that tells us if there is data for that "user"
     if (!snapShot.exists) {
         const { displayName, email } = userAuth;
+
         const createdAt = new Date();
         //Using our account Reference obj, which allow us to perform CRUD action, we can save an instance of this in our firestore nosql db
         try {
-            userRef.set({
+            await userRef.set({
                 displayName,
                 email,
                 createdAt,
@@ -62,3 +64,8 @@ export function signWithGoogle() {
 export function signOut() {
     return auth.signOut();
 }
+
+// export function signUp(signupInfo) {
+//     auth.createUserWithEmailAndPassword(signupInfo.email, signupInfo.password);
+//     alert('yes');
+// }
