@@ -23,18 +23,18 @@ export const firestore = firebase.firestore();
 
 //function to get back the auth object from the auth library and store it in firebase database
 //Made async because waiting to fetching login infomation
-export const createUserProfileDocument = async (userAuth, additionalData) => {
+export const createUserProfileDocument = async (user, additionalData) => {
     //If no user obj was found, just exit
-    if (!userAuth) return;
+    if (!user) return;
     //Retrieve the account obj  Reference first because in order to perform CRUD method in firebase u must first get the documentRef
-    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    const userRef = firestore.doc(`users/${user.uid}`);
     //Then get the account info associated with that with .get()
     const snapShot = await userRef.get();
     //If the account info  was not found inside firebase db then store it
     //because it is a new user that firebase firestore did not add in yet
     //.exists is a property of the snapShot object that tells us if there is data for that "user"
     if (!snapShot.exists) {
-        const { displayName, email } = userAuth;
+        const { displayName, email } = user;
 
         const createdAt = new Date();
         //Using our account Reference obj, which allow us to perform CRUD action, we can save an instance of this in our firestore nosql db
@@ -59,10 +59,6 @@ export function signWithGoogle() {
     //This method takes in a param of which popup provider to signin to and allow authentication with that provider
     // aka a method to signInWithGoogle
     return auth.signInWithRedirect(provider);
-}
-
-export function signOut() {
-    return auth.signOut();
 }
 
 // export function signUp(signupInfo) {

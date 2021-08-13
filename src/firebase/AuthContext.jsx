@@ -35,8 +35,18 @@ export function AuthProvider({ children }) {
         return unsubscribe;
     }, []);
 
+    function signOut() {
+        return auth.signOut();
+    }
+
+    function signIn(email, password) {
+        return auth.signInWithEmailAndPassword(email, password);
+    }
+
     const value = {
         currentUser,
+        signOut,
+        signIn,
     };
 
     return (

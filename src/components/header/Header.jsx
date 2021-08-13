@@ -3,11 +3,10 @@ import React from 'react';
 import { ReactComponent as Logo } from './crown.svg';
 import { Link } from 'react-router-dom';
 import './header.scss';
-import { signOut } from '../../firebase/firebase-utils';
 import { useAuth } from '../../firebase/AuthContext';
 
 const Header = (props) => {
-    const { currentUser } = useAuth();
+    const { currentUser, signOut } = useAuth();
     return (
         <header className='header'>
             <Link to='/' className='logo-container'>

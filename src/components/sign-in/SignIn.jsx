@@ -9,14 +9,20 @@ import { useHistory } from 'react-router-dom';
 
 const SignIn = (props) => {
     let history = useHistory();
-    const { currentUser } = useAuth();
+    const { currentUser, signIn } = useAuth();
     const [email, setEmail, resetEmail] = useForm('');
     const [password, setPassword, resetPassword] = useForm('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         resetEmail();
         resetPassword();
+        try {
+            await signIn(email, password);
+            history.push('/');
+        } catch (e) {
+            alert('noooo', e);
+        }
     };
 
     const handleGoogle = async () => {
