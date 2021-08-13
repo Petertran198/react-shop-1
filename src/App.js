@@ -7,6 +7,7 @@ import Header from './components/header/Header';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
 import { useAuth } from './firebase/AuthContext';
 import PublicRoute from './routes/PublicRoute';
+import SpecificCategory from './pages/specific-category/SpecificCategory';
 function App() {
     return (
         <>
@@ -20,6 +21,11 @@ function App() {
                     component={Homepage}
                 />
                 <Route exact path='/shop' component={ShopPage} />
+                <PublicRoute
+                    restricted={false}
+                    path='/:categoryURL'
+                    component={SpecificCategory}
+                />
                 <PublicRoute
                     restricted={true}
                     component={SignInAndSignUp}

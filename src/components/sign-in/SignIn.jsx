@@ -20,9 +20,7 @@ const SignIn = (props) => {
         try {
             await signIn(email, password);
             history.push('/');
-        } catch (e) {
-            alert('noooo', e);
-        }
+        } catch (e) {}
     };
 
     const handleGoogle = async () => {
@@ -35,7 +33,7 @@ const SignIn = (props) => {
             <span>Sign In with your email and password</span>
             <form>
                 <FormInput
-                    name='email'
+                    name='Email'
                     type='email'
                     value={email}
                     required
