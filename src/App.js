@@ -20,17 +20,18 @@ function App() {
                     path='/'
                     component={Homepage}
                 />
-                <Route exact path='/shop' component={ShopPage} />
-                <PublicRoute
-                    restricted={false}
-                    path='/:categoryURL'
-                    component={SpecificCategory}
-                />
                 <PublicRoute
                     restricted={true}
                     component={SignInAndSignUp}
                     path='/sign-in'
                     exact
+                />
+                <Route exact path='/shop' component={ShopPage} />
+                <PublicRoute
+                    exact
+                    restricted={false}
+                    path='/:categoryURL'
+                    component={SpecificCategory}
                 />
             </Switch>
         </>

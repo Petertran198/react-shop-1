@@ -30,3 +30,15 @@
         }
     }
 }
+
+.img-container {
+    overflow: hidden; //This is to make the hover transform not flow out the menu-item container, making a zoom in effect
+    &:hover {
+        cursor: pointer;
+        //Any elecment when hovering with the class of .background-image inside menu-item will be enlarged
+        & .background-image {
+            transform: scale(1.2);
+            transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+        }
+    }
+}

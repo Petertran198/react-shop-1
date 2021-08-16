@@ -17,8 +17,6 @@ export default function SpecificCategory(props) {
             ?.items || null
     );
 
-    console.log(categoryItems);
-
     return (
         <>
             {categoryItems && (
