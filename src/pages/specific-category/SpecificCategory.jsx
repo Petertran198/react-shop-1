@@ -17,9 +17,13 @@ export default function SpecificCategory(props) {
             ?.items || null
     );
 
+    if (!categoryItems) {
+        return;
+    }
+
     return (
         <>
-            {categoryItems && (
+            {
                 <div className='flex-container'>
                     {categoryItems.map((item) => {
                         return (
@@ -32,7 +36,7 @@ export default function SpecificCategory(props) {
                         );
                     })}
                 </div>
-            )}
+            }
         </>
     );
 }
