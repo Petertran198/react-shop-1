@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
-import { Modal, Button, Dropdown } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import './collectionItem.scss';
 const CollectionItem = (props) => {
     //state for hovered shopping item
     const [isHovered, setIsHovered] = useState(false);
-
     const [show, setShow] = useState(false);
+
+    // Drop down list
+    const [size, setSize] = useState(null);
+    const [quantity, setQuantity] = useState(null);
+    const [cost, setCost] = useState(null);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    useEffect(() => {
+        setCost(quantity * props.price);
+    }, [quantity]);
 
     return (
         <>
@@ -39,27 +48,49 @@ const CollectionItem = (props) => {
                 <Modal.Body className='d-flex'>
                     <img src={`${props.imageUrl}`} className='img-thumbnail' />
                     {/* <h3 className='lead p-1'>Price: {props.price}$</h3> */}
-                    <div className='d-flex flex-column '>
-                        <h3 className='lead p-1 mb-auto'>
-                            <Dropdown>
-                                <Dropdown.Toggle id='dropdown-basic'>
-                                    Dropdown Button
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                    <Dropdown.Item href='#/action-1'>
-                                        Action
-                                    </Dropdown.Item>
-                                    <Dropdown.Item href='#/action-2'>
-                                        Another action
-                                    </Dropdown.Item>
-                                    <Dropdown.Item href='#/action-3'>
-                                        Something else
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                    <div className='d-flex flex-column'>
+                        <h3 className='lead p-1 mb-auto '>
+                            <div className='dropdown'>
+                                <button
+                                    className='btn dropdown-toggle'
+                                    type='button'
+                                    id='dropdownMenuButton'
+                                    data-toggle='dropdown'
+                                >
+                                    {size ? size : 'Size'}
+                                </button>
+                                <div
+                                    class='dropdown-menu'
+                                    aria-labelledby='dropdownMenuButton'
+                                >
+                                    <a
+                                        className='dropdown-item'
+                                        onClick={(e) => setSize(e.target.text)}
+                                    >
+                                        Small
+                                    </a>
+                                    <a
+                                        className='dropdown-item'
+                                        onClick={(e) => setSize(e.target.text)}
+                                    >
+                                        Medium
+                                    </a>
+                                    <a
+                                        className='dropdown-item'
+                                        onClick={(e) => setSize(e.target.text)}
+                                    >
+                                        Large
+                                    </a>
+                                    <a
+                                        className='dropdown-item'
+                                        onClick={(e) => setSize(e.target.text)}
+                                    >
+                                        Extra Large
+                                    </a>
+                                </div>
+                            </div>
                         </h3>{' '}
-                        <h3 className='lead p-1'>
+                        <h3 className='lead p-1 mb-auto'>
                             <div className='dropdown'>
                                 <button
                                     className='btn dropdown-toggle'
@@ -67,22 +98,40 @@ const CollectionItem = (props) => {
                                     id='dropdownMenuButton2'
                                     data-toggle='dropdown'
                                 >
-                                    Quantity
+                                    {quantity ? quantity : 'Quantity'}
                                 </button>
                                 <div
                                     class='dropdown-menu'
                                     aria-labelledby='dropdownMenuButton2'
                                 >
-                                    <a className='dropdown-item' href='#'>
+                                    <a
+                                        className='dropdown-item'
+                                        onClick={(e) =>
+                                            setQuantity(parseInt(e.target.text))
+                                        }
+                                    >
                                         1
                                     </a>
-                                    <a className='dropdown-item' href='#'>
+                                    <a
+                                        className='dropdown-item'
+                                        onClick={(e) =>
+                                            setQuantity(parseInt(e.target.text))
+                                        }
+                                    >
                                         2
                                     </a>
-                                    <a className='dropdown-item' href='#'>
+                                    <a
+                                        className='dropdown-item'
+                                        onClick={(e) =>
+                                            setQuantity(parseInt(e.target.text))
+                                        }
+                                    >
                                         3
                                     </a>
-                                    <a className='dropdown-item' href='#'>
+                                    <a
+                                        className='dropdown-item'
+                                        onClick={(e) => setQuantity(e.target.text)}
+                                    >
                                         4
                                     </a>
                                 </div>
@@ -91,6 +140,9 @@ const CollectionItem = (props) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
+                    <h3 className='w-25 lead text-secondary'>
+                        {cost != 0 && cost + '$'}
+                    </h3>
                     <Button variant='secondary' onClick={handleClose}>
                         Close
                     </Button>
