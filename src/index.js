@@ -5,13 +5,16 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './firebase/AuthContext';
+import CartContextProvider from './contexts/CartContext';
 
 ReactDOM.render(
     <React.StrictMode>
         <AuthProvider>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
+            <CartContextProvider>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </CartContextProvider>
         </AuthProvider>
     </React.StrictMode>,
     document.getElementById('root')

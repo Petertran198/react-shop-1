@@ -4,9 +4,13 @@ import { ReactComponent as Logo } from './crown.svg';
 import { Link } from 'react-router-dom';
 import './header.scss';
 import { useAuth } from '../../firebase/AuthContext';
+import { useCartContext } from '../../contexts/CartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const Header = (props) => {
     const { currentUser, signOut } = useAuth();
+    const { itemCount } = useCartContext();
     return (
         <header className='header'>
             <Link to='/' className='logo-container'>
@@ -44,6 +48,14 @@ const Header = (props) => {
                         Sign In
                     </Link>
                 )}
+                <Link className='option' to='./cart'>
+                    <div className='position-relative'>
+                        <span className='item-count position-absolute text-secondary small'>
+                            {itemCount}
+                        </span>
+                        <FontAwesomeIcon icon={faShoppingCart} />
+                    </div>
+                </Link>
             </div>
         </header>
     );

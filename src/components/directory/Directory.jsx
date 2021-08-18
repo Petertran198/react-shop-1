@@ -6,7 +6,7 @@ const Directory = () => {
     //SECTION_LIST is used to shorten code and not display the array of section objects, aka hats, mens, women
     const [sections, setSections] = useState(SECTION_LIST);
     return (
-        <div className='directory-menu' onClick={console.log('hi')}>
+        <div className='directory-menu'>
             {sections.map((section) => (
                 <MenuItem
                     key={section.id}

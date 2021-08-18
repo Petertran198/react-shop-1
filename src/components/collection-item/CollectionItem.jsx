@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import './collectionItem.scss';
-const CollectionItem = (props) => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { useCartContext } from '../../contexts/CartContext';
+
+const CollectionItem = ({ price, imageUrl, name, id }) => {
     //state for hovered shopping item
     const [isHovered, setIsHovered] = useState(false);
     const [show, setShow] = useState(false);
-
     // Drop down list
     const [size, setSize] = useState(null);
     const [quantity, setQuantity] = useState(null);
     const [cost, setCost] = useState(null);
-
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+    };
 
     useEffect(() => {
-        setCost(quantity * props.price);
+        setCost(quantity * price);
     }, [quantity]);
 
+    // Cart Context
+    const { addProduct, ...cart } = useCartContext();
+
+    const handleAddCart = (e) => {
+        e.preventDefault();
+        handleClose();
+        const item = { id: id, price: price, name: name, quantity, size };
+        if (item && item.size) {
+            addProduct(item);
+        }
+    };
     return (
         <>
             <div
@@ -31,22 +46,22 @@ const CollectionItem = (props) => {
                 <div className='h-100 w-100 img-container'>
                     <div
                         className='image background-image'
-                        style={{ backgroundImage: `url(${props.imageUrl})` }}
+                        style={{ backgroundImage: `url(${imageUrl})` }}
                     />
                 </div>
 
                 <div className='collection-footer'>
-                    <span className='name'>{props.name}</span>
-                    <span className='price'>{props.price}</span>
+                    <span className='name'>{name}</span>
+                    <span className='price'>{price}</span>
                 </div>
             </div>
 
             <Modal show={show} onHide={handleClose} className=' modal-wide'>
                 <Modal.Header closeButton>
-                    <Modal.Title>{props.name}</Modal.Title>
+                    <Modal.Title>{name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='d-flex'>
-                    <img src={`${props.imageUrl}`} className='img-thumbnail' />
+                    <img src={`${imageUrl}`} className='img-thumbnail' />
                     {/* <h3 className='lead p-1'>Price: {props.price}$</h3> */}
                     <div className='d-flex flex-column'>
                         <h3 className='lead p-1 mb-auto '>
@@ -130,7 +145,9 @@ const CollectionItem = (props) => {
                                     </a>
                                     <a
                                         className='dropdown-item'
-                                        onClick={(e) => setQuantity(e.target.text)}
+                                        onClick={(e) =>
+                                            setQuantity(parseInt(e.target.text))
+                                        }
                                     >
                                         4
                                     </a>
@@ -141,13 +158,13 @@ const CollectionItem = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <h3 className='w-25 lead text-secondary'>
-                        {cost != 0 && cost + '$'}
+                        {cost != 0 ? cost + '$' : price + '$'}
                     </h3>
                     <Button variant='secondary' onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant='primary' onClick={handleClose}>
-                        Save Changes
+                    <Button variant='primary' onClick={handleAddCart}>
+                        Add To Cart <FontAwesomeIcon icon={faShoppingCart} />
                     </Button>
                 </Modal.Footer>
             </Modal>

@@ -21,6 +21,10 @@
         .option {
             padding: 10px 15px;
             cursor: pointer;
+            .item-count {
+                left: 100%;
+                bottom: 30%;
+            }
         }
         .drop-down {
             .dropdown-content {
