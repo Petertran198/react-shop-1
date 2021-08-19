@@ -1,74 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import './collectionItem.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useCartContext } from '../../contexts/CartContext';
-
-const CollectionItem = ({ price, imageUrl, name, id }) => {
-    //state for hovered shopping item
-    const [isHovered, setIsHovered] = useState(false);
+import { Modal, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import './CartItem.scss';
+export default function CartItem({ item }) {
+    const { increase } = useCartContext();
     const [show, setShow] = useState(false);
-    // Drop down list
-    const [size, setSize] = useState(null);
-    const [quantity, setQuantity] = useState(null);
-    const [cost, setCost] = useState(null);
+
     const handleClose = () => setShow(false);
-    const handleShow = () => {
-        setShow(true);
-    };
+    const handleShow = () => setShow(true);
+    const [size, setSize] = useState(item.size);
+    const [quantity, setQuantity] = useState(item.quantity);
+    const [cost, setCost] = useState(null);
 
-    useEffect(() => {
-        setCost(quantity * price);
-    }, [quantity]);
-
-    // Cart Context
-    const { addProduct, ...cart } = useCartContext();
-
+    const { addProduct, decrease } = useCartContext();
     const handleAddCart = (e) => {
         e.preventDefault();
         handleClose();
-        const item = {
-            id: id,
-            price: price,
-            name: name,
-            imageUrl: imageUrl,
-            quantity,
-            size,
+        const shopItem = {
+            id: item.id,
+            price: item.price,
+            name: item.name,
+            quantity: quantity,
+            size: size,
         };
+        console.log(shopItem);
         if (item && item.size) {
-            addProduct(item);
+            addProduct(shopItem);
         }
     };
+
+    useEffect(() => {
+        setCost(quantity * item.price);
+    }, [quantity]);
+
     return (
         <>
-            <div
-                className={`collection-item my-2 ${
-                    isHovered && 'selectedItem img-thumbnail p-2'
-                }`}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onClick={handleShow}
-            >
-                <div className='h-100 w-100 img-container'>
-                    <div
-                        className='image background-image'
-                        style={{ backgroundImage: `url(${imageUrl})` }}
-                    />
+            <li class='list-group-item d-flex justify-content-between  align-items-center clickable'>
+                <span className='h6' style={{ flex: '1' }} onClick={handleShow}>
+                    {item.name}
+                </span>
+                <span className='h6 ' style={{ flex: '1' }}>
+                    {item.price}$
+                </span>
+                {item.size && (
+                    <span className='h6  ' style={{ flex: '1' }}>
+                        {item.size}
+                    </span>
+                )}
+                <div>
+                    <span className='h6 py-1 px-3 ' style={{ flex: '1' }}>
+                        {item.quantity}
+                    </span>
                 </div>
-
-                <div className='collection-footer'>
-                    <span className='name'>{name}</span>
-                    <span className='price'>{price}</span>
-                </div>
-            </div>
+                <span
+                    className='h6 d-flex justify-content-end '
+                    style={{ flex: '1' }}
+                >
+                    {item.price * item.quantity}$
+                </span>{' '}
+            </li>
 
             <Modal show={show} onHide={handleClose} className=' modal-wide'>
                 <Modal.Header closeButton>
-                    <Modal.Title>{name}</Modal.Title>
+                    <Modal.Title>{item.name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='d-flex'>
-                    <img src={`${imageUrl}`} className='img-thumbnail' />
+                    <img src={`${item.imageUrl}`} className='img-thumbnail' />
                     {/* <h3 className='lead p-1'>Price: {props.price}$</h3> */}
                     <div className='d-flex flex-column'>
                         <h3 className='lead p-1 mb-auto '>
@@ -165,18 +164,16 @@ const CollectionItem = ({ price, imageUrl, name, id }) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <h3 className='w-25 lead text-secondary'>
-                        {cost != 0 ? cost + '$' : price + '$'}
+                        {cost != 0 ? cost + '$' : item.price + '$'}
                     </h3>
-                    <Button variant='secondary' onClick={handleClose}>
-                        Close
+                    <Button variant='danger' onClick={handleAddCart}>
+                        <FontAwesomeIcon icon={faTrash} /> Delete Item
                     </Button>
                     <Button variant='primary' onClick={handleAddCart}>
-                        Add To Cart <FontAwesomeIcon icon={faShoppingCart} />
+                        Edit Cart Item <FontAwesomeIcon icon={faEdit} />
                     </Button>
                 </Modal.Footer>
             </Modal>
         </>
     );
-};
-
-export default CollectionItem;
+}

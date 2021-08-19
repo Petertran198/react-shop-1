@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './app.scss';
 import Homepage from './pages/homepage/Homepage';
 import { Route, Switch } from 'react-router-dom';
@@ -9,8 +9,6 @@ import PublicRoute from './routes/PublicRoute';
 import SpecificCategory from './pages/specific-category/SpecificCategory';
 import AddToCart from './pages/add-to-cart/AddToCart';
 function App() {
-    const [cart, setCart] = useState([]);
-
     return (
         <>
             <Header />

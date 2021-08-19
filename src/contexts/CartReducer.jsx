@@ -64,26 +64,22 @@ export const CartReducer = (state, action) => {
                 ],
             };
         case 'INCREASE':
-            state.cartItems[
-                state.cartItems.findIndex(
-                    (item) =>
-                        item.id === action.payload.id &&
-                        item.size === action.payload.size
-                )
-            ].quantity++;
+            state.cartItems.find(
+                (item) =>
+                    item.id === action.payload.id &&
+                    item.size === action.payload.size
+            ).quantity++;
             return {
                 ...state,
                 ...sumItems(state.cartItems),
                 cartItems: [...state.cartItems],
             };
         case 'DECREASE':
-            state.cartItems[
-                state.cartItems.findIndex(
-                    (item) =>
-                        item.id === action.payload.id &&
-                        item.size === action.payload.size
-                )
-            ].quantity--;
+            state.cartItems.find(
+                (item) =>
+                    item.id === action.payload.id &&
+                    item.size === action.payload.size
+            ).quantity--;
             return {
                 ...state,
                 ...sumItems(state.cartItems),

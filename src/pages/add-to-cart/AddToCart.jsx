@@ -1,9 +1,9 @@
 import React from 'react';
+import CartItem from '../../components/cart/CartItem';
 import { useCartContext } from '../../contexts/CartContext';
 
 export default function AddToCart() {
     const { increase, decrease, cartItems, clearCart, ...cart } = useCartContext();
-    console.log(cart);
     return (
         <>
             <div className='d-flex justify-content-between'>
@@ -14,51 +14,39 @@ export default function AddToCart() {
             </div>
 
             <ul class='list-group card m-1' style={{ minHeight: '250px' }}>
-                {cartItems.map((item) => {
-                    return (
-                        <li class='list-group-item d-flex justify-content-between  align-items-center'>
-                            <span className='h6 ' style={{ flex: '1' }}>
-                                {item.name}
-                            </span>
-                            <span className='h6 ' style={{ flex: '1' }}>
-                                {item.price}$
-                            </span>
-                            {item.size && (
-                                <span className='h6  ' style={{ flex: '1' }}>
-                                    {item.size}
-                                </span>
-                            )}
-                            <div>
-                                <button
-                                    className='btn btn-success '
-                                    style={{ flex: '1' }}
-                                    onClick={() => increase(item)}
-                                >
-                                    +
-                                </button>
-                                <span
-                                    className='h6 py-1 px-3 '
-                                    style={{ flex: '1' }}
-                                >
-                                    {item.quantity}
-                                </span>
-                                <button
-                                    className='btn btn-danger '
-                                    style={{ flex: '1' }}
-                                    onClick={() => decrease(item)}
-                                >
-                                    -
-                                </button>
-                            </div>
+                <li class='list-group-item d-flex justify-content-between '>
+                    <span className='h6 text-primary ' style={{ flex: '1' }}>
+                        Name
+                    </span>
+                    <span className='h6 text-primary ' style={{ flex: '1' }}>
+                        Price
+                    </span>
 
-                            <span
-                                className='h6 d-flex justify-content-end '
-                                style={{ flex: '1' }}
-                            >
-                                {item.price * item.quantity}$
-                            </span>
-                        </li>
-                    );
+                    <span
+                        className='h6 text-primary'
+                        style={{ flex: '1', marginLeft: '4%' }}
+                    >
+                        Size
+                    </span>
+
+                    <div>
+                        <span
+                            className='h6 text-primary py-1 px-3 '
+                            style={{ flex: '1' }}
+                        >
+                            Quantity
+                        </span>
+                    </div>
+
+                    <span
+                        className='h6 text-primary d-flex justify-content-end '
+                        style={{ flex: '1' }}
+                    >
+                        Cost
+                    </span>
+                </li>
+                {cartItems.map((item) => {
+                    return <CartItem item={item} />;
                 })}
             </ul>
             <div
