@@ -23,9 +23,6 @@ const Header = (props) => {
                 <Link className='option' to='./shop'>
                     Shop
                 </Link>
-                <Link className='option' to='./shop'>
-                    Contact
-                </Link>
                 {currentUser && currentUser.displayName ? (
                     <div className='option drop-down'>
                         <div className='dropdown-title'>

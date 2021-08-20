@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CartItem from '../../components/cart/CartItem';
 import { useCartContext } from '../../contexts/CartContext';
-
+import './addToCart.scss';
 export default function AddToCart() {
     const { increase, decrease, cartItems, clearCart, ...cart } = useCartContext();
+    const [error, setError] = useState();
+
     return (
         <>
             <div className='d-flex justify-content-between'>
@@ -46,7 +48,7 @@ export default function AddToCart() {
                     </span>
                 </li>
                 {cartItems.map((item) => {
-                    return <CartItem item={item} />;
+                    return <CartItem item={item} setError={setError} />;
                 })}
             </ul>
             <div

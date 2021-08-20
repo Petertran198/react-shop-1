@@ -10,6 +10,7 @@ export const useCartContext = () => {
 const storage = localStorage.getItem('cart')
     ? JSON.parse(localStorage.getItem('cart'))
     : [];
+
 const initialState = { cartItems: storage, ...sumItems(storage), checkout: false };
 
 const CartContextProvider = ({ children }) => {

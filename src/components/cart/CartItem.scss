@@ -4,3 +4,13 @@
         opacity: 0.9;
     }
 }
+
+.quantity-0 {
+    opacity: 0;
+    display: none;
+    transition: opacity 0.5s linear;
+    -webkit-transition: opacity 0.5s linear;
+    -moz-transition: opacity 0.5s linear;
+    -o-transition: opacity 0.5s linear;
+    -ms-transition: opacity 0.5s linear;
+}

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useCartContext } from '../../contexts/CartContext';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
 import './CartItem.scss';
-export default function CartItem({ item }) {
+
+export default function CartItem({ item, setError }) {
     const { increase } = useCartContext();
     const [show, setShow] = useState(false);
 
@@ -14,21 +16,29 @@ export default function CartItem({ item }) {
     const [quantity, setQuantity] = useState(item.quantity);
     const [cost, setCost] = useState(null);
 
-    const { addProduct, decrease } = useCartContext();
+    const { addProduct, removeProduct } = useCartContext();
+
+    const history = useHistory();
     const handleAddCart = (e) => {
+        setError('');
         e.preventDefault();
         handleClose();
         const shopItem = {
             id: item.id,
+            imageUrl: item.imageUrl,
             price: item.price,
             name: item.name,
             quantity: quantity,
             size: size,
         };
-        console.log(shopItem);
-        if (item && item.size) {
+        if (shopItem && shopItem.size == item.size) {
             addProduct(shopItem);
         }
+    };
+
+    const handleRemoveItem = (item) => {
+        removeProduct(item);
+        setShow(false);
     };
 
     useEffect(() => {
@@ -37,8 +47,11 @@ export default function CartItem({ item }) {
 
     return (
         <>
-            <li class='list-group-item d-flex justify-content-between  align-items-center clickable'>
-                <span className='h6' style={{ flex: '1' }} onClick={handleShow}>
+            <li
+                class='list-group-item d-flex justify-content-between  align-items-center clickable'
+                onClick={handleShow}
+            >
+                <span className='h6' style={{ flex: '1' }}>
                     {item.name}
                 </span>
                 <span className='h6 ' style={{ flex: '1' }}>
@@ -78,7 +91,7 @@ export default function CartItem({ item }) {
                                     id='dropdownMenuButton'
                                     data-toggle='dropdown'
                                 >
-                                    {size ? size : 'Size'}
+                                    {size ? item.size : 'Size'}
                                 </button>
                                 <div
                                     class='dropdown-menu'
@@ -119,7 +132,7 @@ export default function CartItem({ item }) {
                                     id='dropdownMenuButton2'
                                     data-toggle='dropdown'
                                 >
-                                    {quantity ? quantity : 'Quantity'}
+                                    {quantity ? item.quantity : 'Quantity'}
                                 </button>
                                 <div
                                     class='dropdown-menu'
@@ -166,7 +179,7 @@ export default function CartItem({ item }) {
                     <h3 className='w-25 lead text-secondary'>
                         {cost != 0 ? cost + '$' : item.price + '$'}
                     </h3>
-                    <Button variant='danger' onClick={handleAddCart}>
+                    <Button variant='danger' onClick={() => handleRemoveItem(item)}>
                         <FontAwesomeIcon icon={faTrash} /> Delete Item
                     </Button>
                     <Button variant='primary' onClick={handleAddCart}>

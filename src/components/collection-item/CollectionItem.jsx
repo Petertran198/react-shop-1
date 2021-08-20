@@ -32,11 +32,11 @@ const CollectionItem = ({ price, imageUrl, name, id }) => {
             id: id,
             price: price,
             name: name,
-            imageUrl: imageUrl,
+            imageUrl,
             quantity,
             size,
         };
-        if (item && item.size) {
+        if (item && item.size && item.quantity) {
             addProduct(item);
         }
     };
