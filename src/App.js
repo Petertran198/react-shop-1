@@ -8,6 +8,7 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
 import PublicRoute from './routes/PublicRoute';
 import SpecificCategory from './pages/specific-category/SpecificCategory';
 import AddToCart from './pages/add-to-cart/AddToCart';
+import StripeContainer from './components/stripe/StripeContainer';
 function App() {
     return (
         <>
@@ -20,6 +21,13 @@ function App() {
                     path='/'
                     component={Homepage}
                 />
+                <PublicRoute
+                    restricted={false}
+                    exact
+                    path='/payment'
+                    component={StripeContainer}
+                />
+
                 <PublicRoute
                     restricted={false}
                     exact
