@@ -6,8 +6,8 @@ import { signWithGoogle } from '../../firebase/firebase-utils';
 import './signIn.scss';
 import { useAuth } from '../../firebase/AuthContext';
 import { useHistory } from 'react-router-dom';
-
-const SignIn = (props) => {
+import SignUp from '../sign-up/SignUp';
+const SignIn = ({ noRedirect }) => {
     let history = useHistory();
     const { currentUser, signIn } = useAuth();
     const [email, setEmail, resetEmail] = useForm('');
@@ -25,11 +25,15 @@ const SignIn = (props) => {
 
     const handleGoogle = async () => {
         await signWithGoogle();
-        history.push('/');
+        if (noRedirect === true) {
+            return;
+        } else {
+            history.push('/');
+        }
     };
     return (
         <div className='sign-in' onSubmit={handleSubmit}>
-            <h2>I already have an account</h2>
+            <h2>Have an Account</h2>
             <span>Sign In with your email and password</span>
             <form>
                 <FormInput

@@ -1,19 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import {
-    CardNumberElement,
-    CardExpiryElement,
-    CardCVCElement,
-    injectStripe,
-} from 'react-stripe-elements';
-
+import SignIn from '../sign-in/SignIn';
+import FormInput from '../form-input/FormInput';
+import { useAuth } from '../../firebase/AuthContext';
 //Style option for stripe
 const CARD_OPTIONS = {
     iconStyle: 'solid',
     style: {
         base: {
             iconColor: '#c4f0ff',
-            color: '#fff',
+            color: '#001',
             fontWeight: 500,
             fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
             fontSize: '16px',
@@ -22,15 +18,19 @@ const CARD_OPTIONS = {
             '::placeholder': { color: '#87bbfd' },
         },
         invalid: {
-            iconColor: '#ffc7ee',
-            color: '#ffc7ee',
+            iconColor: 'red',
+            color: 'red',
         },
     },
 };
-
-export default function PaymentForm() {
+function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
+
+    const [emailInfo, setEmailInfo] = useState('');
+
+    //currentUser to fill form
+    const { currentUser } = useAuth();
 
     const handleSubmit = async (event) => {
         // Block native form submission.
@@ -54,18 +54,46 @@ export default function PaymentForm() {
         });
 
         if (error) {
-            console.log('[error]', error);
+            console.log('error----', error);
         } else {
-            console.log('[PaymentMethod]', paymentMethod);
+            console.log('PaymentMethod-----', paymentMethod);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <CardElement options={CARD_OPTIONS} />
-            <button type='submit' disabled={!stripe}>
-                Pay
-            </button>
-        </form>
+        <div className='container'>
+            {' '}
+            <div className='row'>
+                {!currentUser ? (
+                    <div className='col-md-6'>
+                        <SignIn noRedirect={true} />
+                    </div>
+                ) : (
+                    <h3
+                        className='h-100 col-md-6 d-flex justify-content-center align-items-center text-muted'
+                        style={{ minHeight: '350px' }}
+                    >
+                        Welcome {currentUser.email}
+                    </h3>
+                )}
+                <form onSubmit={handleSubmit} className='col-md-6'>
+                    <h1>User Info</h1>
+                    <FormInput
+                        name='Email'
+                        type='email'
+                        value={currentUser ? currentUser.email : emailInfo}
+                        required
+                        handleChange={(e) => setEmailInfo(e.target.value)}
+                        label='Email'
+                    />
+                    <CardElement options={CARD_OPTIONS} />
+                    <button type='submit' className='order-button'>
+                        Pay
+                    </button>
+                </form>
+            </div>
+        </div>
     );
 }
+
+export default PaymentForm;

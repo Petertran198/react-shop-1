@@ -6,7 +6,7 @@ const SignInAndSignUp = () => {
     return (
         <>
             <div className='sign-in-and-sign-up'>
-                <SignIn />
+                <SignIn noRedirect={false} />
                 <SignUp />
             </div>
         </>

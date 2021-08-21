@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import CartItem from '../../components/cart/CartItem';
 import { useCartContext } from '../../contexts/CartContext';
 import './addToCart.scss';
 export default function AddToCart() {
     const { increase, decrease, cartItems, clearCart, ...cart } = useCartContext();
     const [error, setError] = useState();
-
+    const history = useHistory();
     return (
         <>
             <div className='d-flex justify-content-between'>
@@ -51,12 +52,19 @@ export default function AddToCart() {
                     return <CartItem item={item} setError={setError} />;
                 })}
             </ul>
-            <div
-                className='d-flex justify-content-end align-items-end '
-                style={{ height: '50px' }}
-            >
-                Total: {cart.total}
-            </div>
+            {cart.total > 0 && (
+                <div
+                    className='d-flex justify-content-end align-items-end '
+                    style={{ height: '50px' }}
+                >
+                    <button
+                        className='btn btn-primary'
+                        onClick={() => history.push('./payment')}
+                    >
+                        Purchase {cart.total}
+                    </button>
+                </div>
+            )}
         </>
     );
 }
