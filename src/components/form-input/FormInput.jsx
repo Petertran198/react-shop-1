@@ -2,7 +2,7 @@ import React from 'react';
 import './formInput.scss';
 const FormInput = (props) => {
     return (
-        <div className='group'>
+        <div className='group '>
             <input
                 className='form-input'
                 name={props.name}

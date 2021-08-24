@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import SignIn from '../sign-in/SignIn';
-import FormInput from '../form-input/FormInput';
 import { useAuth } from '../../firebase/AuthContext';
+import FormUserInfo from './FormUserInfo';
+
 //Style option for stripe
 const CARD_OPTIONS = {
     iconStyle: 'solid',
@@ -27,8 +28,18 @@ function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
 
+    //Form info state
     const [emailInfo, setEmailInfo] = useState('');
-
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [street, setStreet] = useState('');
+    const [zip, setZip] = useState('');
+    const [city, setCity] = useState('');
+    const [whichFormToDisplay, setWhichFormToDisplay] = useState({
+        userInfoForm: true,
+        userBillingForm: false,
+        userShippingForm: false,
+    });
     //currentUser to fill form
     const { currentUser } = useAuth();
 
@@ -76,21 +87,26 @@ function PaymentForm() {
                         Welcome {currentUser.email}
                     </h3>
                 )}
-                <form onSubmit={handleSubmit} className='col-md-6'>
-                    <h1>User Info</h1>
-                    <FormInput
-                        name='Email'
-                        type='email'
-                        value={currentUser ? currentUser.email : emailInfo}
-                        required
-                        handleChange={(e) => setEmailInfo(e.target.value)}
-                        label='Email'
-                    />
-                    <CardElement options={CARD_OPTIONS} />
-                    <button type='submit' className='order-button'>
-                        Pay
-                    </button>
-                </form>
+                <div className='col-md-6'>
+                    {whichFormToDisplay.userInfoForm === true && (
+                        <FormUserInfo
+                            currentUser={currentUser}
+                            firstName={firstName}
+                            setFirstName={setFirstName}
+                            lastName={lastName}
+                            setLastName={setLastName}
+                            emailInfo={emailInfo}
+                            setEmailInfo={setEmailInfo}
+                            street={street}
+                            setStreet={setStreet}
+                            zip={zip}
+                            setZip={setZip}
+                            setCity={setCity}
+                            city={city}
+                            setWhichFormToDisplay={setWhichFormToDisplay}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );
