@@ -4,7 +4,7 @@ import './collectionPreview.scss';
 const CollectionPreview = (props) => {
     return (
         <div className='collection-preview'>
-            <h1 className='title'>{props.title}</h1>
+            <h1 className='title border p-2 bg-light lead'>{props.title}</h1>
             <div className='preview'>
                 {props.items
                     .filter((item, index) => index < 4)
