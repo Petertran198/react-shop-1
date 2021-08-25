@@ -5,7 +5,9 @@ import { Route, Switch } from 'react-router-dom';
 import ShopPage from './pages/shop/ShopPage';
 import Header from './components/header/Header';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/SignInAndSignUp';
+import EditProfile from './pages/edit-profile/EditProfile';
 import PublicRoute from './routes/PublicRoute';
+import PrivateRoute from './routes/PrivateRoute';
 import SpecificCategory from './pages/specific-category/SpecificCategory';
 import AddToCart from './pages/add-to-cart/AddToCart';
 import StripeContainer from './components/stripe/StripeContainer';
@@ -22,6 +24,8 @@ function App() {
                     path='/'
                     component={Homepage}
                 />
+                <PrivateRoute path='/edit-profile' component={EditProfile} />
+
                 <PublicRoute
                     restricted={false}
                     exact
@@ -48,6 +52,7 @@ function App() {
                     path='/sign-in'
                     exact
                 />
+
                 <Route exact path='/shop' component={ShopPage} />
                 <PublicRoute
                     exact
