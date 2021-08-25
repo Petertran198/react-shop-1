@@ -86,7 +86,9 @@ function FormUserInfo({
             {/* <CardElement options={CARD_OPTIONS} /> */}
             <button
                 className=' mb-3 btn btn-primary btn-lg btn-block w-100'
-                onClick={() => {
+                onClick={(e) => {
+                    e.preventDefault();
+
                     setWhichFormToDisplay({
                         userInfoForm: false,
                         userBillingForm: true,

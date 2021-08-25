@@ -9,6 +9,7 @@ import PublicRoute from './routes/PublicRoute';
 import SpecificCategory from './pages/specific-category/SpecificCategory';
 import AddToCart from './pages/add-to-cart/AddToCart';
 import StripeContainer from './components/stripe/StripeContainer';
+import PurchaseSuccessForm from './components/stripe/PurchaseSuccessForm';
 function App() {
     return (
         <>
@@ -20,6 +21,12 @@ function App() {
                     exact
                     path='/'
                     component={Homepage}
+                />
+                <PublicRoute
+                    restricted={false}
+                    exact
+                    path='/purchased-complete'
+                    component={PurchaseSuccessForm}
                 />
                 <PublicRoute
                     restricted={false}
