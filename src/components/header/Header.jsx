@@ -11,6 +11,9 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 const Header = (props) => {
     const { currentUser, signOut } = useAuth();
     const { itemCount } = useCartContext();
+    const handleUpdate = () => {
+        return;
+    };
     return (
         <header className='header'>
             <Link to='/' className='logo-container'>
@@ -31,9 +34,15 @@ const Header = (props) => {
                                 currentUser.displayName.slice(1)}
                         </div>
                         <div className='dropdown-content'>
+                            <Link className='dropdown-link' to='./edit-profile'>
+                                Edit Profile
+                            </Link>
+
+                            <hr />
+
                             <Link
                                 to='./sign-in'
-                                className='dropdown-link'
+                                className='btn btn-block btn-danger mt-0'
                                 onClick={signOut}
                             >
                                 Sign Out

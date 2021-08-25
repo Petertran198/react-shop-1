@@ -68,7 +68,7 @@ const SignUp = () => {
                     handleChange={(e) =>
                         handleChangeForAttributes({ email: e.target.value })
                     }
-                    label='email'
+                    label='Email'
                 />
                 <FormInput
                     type='text'

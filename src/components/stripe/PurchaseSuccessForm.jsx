@@ -16,9 +16,7 @@ export default function PurchaseSuccessForm() {
                 id='uncontrolled-tab-example'
                 className='mb-3'
             >
-                <Tab eventKey='User-Info' title='User Info'>
-                    sssss
-                </Tab>
+                <Tab eventKey='User-Info' title='User Info'></Tab>
                 <Tab eventKey='Billing' title='Billing'>
                     asssss
                 </Tab>
