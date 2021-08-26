@@ -13,6 +13,8 @@ const SignUp = () => {
         password: '',
         confirmPassword: '',
     });
+    const [error, setError] = useState([]);
+
     const [loading, setLoading] = useState(false);
 
     const history = useHistory();
@@ -47,7 +49,7 @@ const SignUp = () => {
 
     return (
         <div className='sign-up'>
-            <h2 className='title'>I do not have an account</h2>
+            <h2 className='title'>Create an Account</h2>
             <span>Sign Up with your Email and Password</span>
             <form className='sign-up-form' onSubmit={handleSubmit}>
                 <FormInput

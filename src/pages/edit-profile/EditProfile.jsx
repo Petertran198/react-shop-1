@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import FormInput from '../../components/form-input/FormInput';
 import { useAuth } from '../../firebase/AuthContext';
+import { useHistory } from 'react-router';
+import { firestore } from '../../firebase/firebase-utils';
+
 function EditProfile() {
-    const { currentUser } = useAuth();
+    const history = useHistory();
+    const { currentUser, getUsers } = useAuth();
     const [profileInfo, setProfileInfo] = useState({
         displayName:
             currentUser && currentUser.displayName ? currentUser.displayName : ' ',
@@ -16,12 +20,24 @@ function EditProfile() {
         password: '',
         passwordConfirm: '',
     });
-    console.log(currentUser);
+    const [error, setError] = useState([]);
+
     // Takes in an object with the attribute and the value u want to change and change that portion of the profileInfo
     const handleChangeForAttributes = (changedAttr) => {
         setProfileInfo({ ...profileInfo, ...changedAttr });
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (error.length > 0) {
+            //Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            history.push('./');
+        }
+    };
+
+    getUsers();
     return (
         <>
             <form className='container'>
@@ -141,7 +157,9 @@ function EditProfile() {
                     label='Password Confirm'
                 />
                 <div className='d-flex justify-content-end'>
-                    <button className='btn  btn-primary'>Update Profile</button>
+                    <button className='btn  btn-primary' onClick={handleSubmit}>
+                        Update Profile
+                    </button>
                 </div>
             </form>
         </>

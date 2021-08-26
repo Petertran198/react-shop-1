@@ -60,8 +60,3 @@ export function signWithGoogle() {
     // aka a method to signInWithGoogle
     return auth.signInWithPopup(provider);
 }
-
-// export function signUp(signupInfo) {
-//     auth.createUserWithEmailAndPassword(signupInfo.email, signupInfo.password);
-//     alert('yes');
-// }

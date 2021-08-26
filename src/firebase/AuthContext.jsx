@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth, createUserProfileDocument } from './firebase-utils';
+import { auth, createUserProfileDocument, firestore } from './firebase-utils';
 
 const AuthContext = React.createContext();
 
@@ -43,10 +43,34 @@ export function AuthProvider({ children }) {
         return auth.signInWithEmailAndPassword(email, password);
     }
 
+    const getUsers = async () => {
+        try {
+            // first await to get firestore.collection('users').get() to get all the data in the users table in firebase cloud storage
+            const users = await firestore
+                .collection('users')
+                .get()
+                //after awaiting .get() u will be returned an array of snapshot OBJECTS. The array contains zero or more snapshot objects which represent the results of the query
+                //aka this is what is returned from .get() is complete      {_firestore: t, _delegate: t}
+                .then((snapshot) => {
+                    // then u got to go through each of the snapshot objects returned from the query and iterate through it to get the data
+                    snapshot.forEach((doc) => {
+                        console.log(doc.data()); // ex will return  {email: "petertran198@gmail.com", createdAt: t, displayName: "petertran98"}
+                    });
+                })
+                .catch((error) => {
+                    console.log('Error getting users: ', error);
+                });
+            return users;
+        } catch (error) {
+            console.log(error, '----Auth Context Page');
+        }
+    };
+
     const value = {
         currentUser,
         signOut,
         signIn,
+        getUsers,
     };
 
     return (
