@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth, createUserProfileDocument, firestore } from './firebase-utils';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 const AuthContext = React.createContext();
 
@@ -54,7 +56,7 @@ export function AuthProvider({ children }) {
                 .then((snapshot) => {
                     // then u got to go through each of the snapshot objects returned from the query and iterate through it to get the data
                     snapshot.forEach((doc) => {
-                        console.log(doc.data()); // ex will return  {email: "petertran198@gmail.com", createdAt: t, displayName: "petertran98"}
+                        return { ...doc.data() }; // ex will return  {email: "petertran198@gmail.com", createdAt: t, displayName: "petertran98"}
                     });
                 })
                 .catch((error) => {
@@ -66,11 +68,20 @@ export function AuthProvider({ children }) {
         }
     };
 
+    const updateUserProfile = (profile) => {
+        // look for the table called users and find a doc where the id of the doc is the currentUser.id
+        return firestore
+            .collection('users')
+            .doc(auth.currentUser.uid)
+            .update(profile);
+    };
+
     const value = {
         currentUser,
         signOut,
         signIn,
         getUsers,
+        updateUserProfile,
     };
 
     return (

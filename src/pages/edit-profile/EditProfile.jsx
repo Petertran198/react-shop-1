@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormInput from '../../components/form-input/FormInput';
 import { useAuth } from '../../firebase/AuthContext';
 import { useHistory } from 'react-router';
@@ -6,7 +6,7 @@ import { firestore } from '../../firebase/firebase-utils';
 
 function EditProfile() {
     const history = useHistory();
-    const { currentUser, getUsers } = useAuth();
+    const { currentUser, updateUserProfile } = useAuth();
     const [profileInfo, setProfileInfo] = useState({
         displayName:
             currentUser && currentUser.displayName ? currentUser.displayName : ' ',
@@ -27,19 +27,24 @@ function EditProfile() {
         setProfileInfo({ ...profileInfo, ...changedAttr });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (error.length > 0) {
             //Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
-            history.push('./');
+            try {
+                await updateUserProfile(profileInfo);
+                history.push('./');
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
 
-    getUsers();
     return (
         <>
+            {JSON.stringify(currentUser)}
             <form className='container'>
                 <h1 className='lead text-center border p-2 bg-light'>
                     Update Profile

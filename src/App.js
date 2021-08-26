@@ -47,7 +47,7 @@ function App() {
                 />
 
                 <PublicRoute
-                    restricted={true}
+                    restricted={false}
                     component={SignInAndSignUp}
                     path='/sign-in'
                     exact
