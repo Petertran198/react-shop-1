@@ -5,7 +5,7 @@ import FormInput from '../form-input/FormInput';
 import { signWithGoogle } from '../../firebase/firebase-utils';
 import './signIn.scss';
 import { useAuth } from '../../firebase/AuthContext';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SignUp from '../sign-up/SignUp';
 const SignIn = ({ noRedirect }) => {
     let history = useHistory();
@@ -60,6 +60,9 @@ const SignIn = ({ noRedirect }) => {
                         Google Auth{' '}
                     </Button>
                 </div>
+                <Link to='./forget-password' className='link-primary pt-1 small'>
+                    Forgot Password?
+                </Link>
             </form>
         </div>
     );

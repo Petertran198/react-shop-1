@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import CollectionItem from '../../components/collection-item/CollectionItem';
 import SHOP_DATA from '../shop/ShopData';
 import './specificCategory.scss';
@@ -18,7 +18,31 @@ export default function SpecificCategory(props) {
     );
 
     if (!categoryItems) {
-        return;
+        return (
+            <div class='container'>
+                <div
+                    class='row d-flex align-items-center'
+                    style={{ height: '400px' }}
+                >
+                    <div class='col-md-12'>
+                        <div class='error-template'>
+                            <h1 className='text-danger'>Oops!</h1>
+                            <h2>404 Not Found :(</h2>
+                            <div class='error-details'>
+                                Sorry, an error has occured, Requested page not
+                                found!
+                            </div>
+                            <div class='error-actions'>
+                                <Link to='./' className='link-primary'>
+                                    <span class='glyphicon glyphicon-home'></span>
+                                    Take Me Home{' '}
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     return (

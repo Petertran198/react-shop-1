@@ -9,17 +9,32 @@ function EditProfile() {
     const { currentUser, updateUserProfile } = useAuth();
     const [profileInfo, setProfileInfo] = useState({
         displayName:
-            currentUser && currentUser.displayName ? currentUser.displayName : ' ',
-        email: '',
-        shippingFirstName: '',
-        shippingLastName: '',
-        shippingStreetAddress: '',
-        shippingCity: '',
-        shippingZip: '',
-        shippingState: '',
+            currentUser && currentUser.displayName ? currentUser.displayName : '',
+        email: currentUser && currentUser.email ? currentUser.email : '',
+        shippingFirstName:
+            currentUser && currentUser.shippingFirstName
+                ? currentUser.shippingFirstName
+                : '',
+        shippingLastName:
+            currentUser && currentUser.shippingLastName
+                ? currentUser.shippingLastName
+                : '',
+        shippingStreetAddress:
+            currentUser && currentUser.shippingStreetAddress
+                ? currentUser.shippingStreetAddress
+                : '',
+        shippingCity:
+            currentUser && currentUser.shippingCity ? currentUser.shippingCity : '',
+        shippingZip:
+            currentUser && currentUser.shippingZip ? currentUser.shippingZip : '',
+        shippingState:
+            currentUser && currentUser.shippingState
+                ? currentUser.shippingState
+                : '',
         password: '',
         passwordConfirm: '',
     });
+
     const [error, setError] = useState([]);
 
     // Takes in an object with the attribute and the value u want to change and change that portion of the profileInfo
@@ -29,19 +44,22 @@ function EditProfile() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (error.length > 0) {
-            //Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            try {
-                await updateUserProfile(profileInfo);
-                history.push('./');
-            } catch (error) {
-                console.log(error);
+        if (window.confirm('Are you sure you want to update profile?') == true) {
+            if (error.length > 0) {
+                //Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                try {
+                    await updateUserProfile(profileInfo);
+                    history.push('./');
+                } catch (error) {
+                    setError((err) => [...err, error.message]);
+                }
             }
         }
     };
 
+    console.log(error);
     return (
         <>
             {JSON.stringify(currentUser)}

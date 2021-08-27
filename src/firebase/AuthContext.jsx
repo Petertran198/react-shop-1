@@ -45,6 +45,11 @@ export function AuthProvider({ children }) {
         return auth.signInWithEmailAndPassword(email, password);
     }
 
+    const resetPassword = (email) => {
+        //return promise if successful will send reset link to email so you got to async/await when used in different files
+        return auth.sendPasswordResetEmail(email);
+    };
+
     const getUsers = async () => {
         try {
             // first await to get firestore.collection('users').get() to get all the data in the users table in firebase cloud storage
@@ -82,6 +87,7 @@ export function AuthProvider({ children }) {
         signIn,
         getUsers,
         updateUserProfile,
+        resetPassword,
     };
 
     return (

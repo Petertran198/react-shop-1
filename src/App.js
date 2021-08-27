@@ -12,6 +12,7 @@ import SpecificCategory from './pages/specific-category/SpecificCategory';
 import AddToCart from './pages/add-to-cart/AddToCart';
 import StripeContainer from './components/stripe/StripeContainer';
 import PurchaseSuccessForm from './components/stripe/PurchaseSuccessForm';
+import ForgotPassword from './pages/forgot-password/ForgotPassword';
 function App() {
     return (
         <>
@@ -25,6 +26,12 @@ function App() {
                     component={Homepage}
                 />
                 <PrivateRoute path='/edit-profile' component={EditProfile} />
+                <PublicRoute
+                    restricted={true}
+                    exact
+                    path='/forget-password'
+                    component={ForgotPassword}
+                />
 
                 <PublicRoute
                     restricted={false}
@@ -47,7 +54,7 @@ function App() {
                 />
 
                 <PublicRoute
-                    restricted={false}
+                    restricted={true}
                     component={SignInAndSignUp}
                     path='/sign-in'
                     exact
