@@ -16,6 +16,8 @@ export default function FormBillingInfo({
     setZipBilling,
     setCityBilling,
     cityBilling,
+    stateBilling,
+    setStateBilling,
 }) {
     return (
         <form className=''>
@@ -51,6 +53,14 @@ export default function FormBillingInfo({
                 required
                 handleChange={(e) => setCityBilling(e.target.value)}
                 label='Billing City Address'
+            />
+            <FormInput
+                name='Billing State'
+                type='text'
+                value={stateBilling}
+                required
+                handleChange={(e) => setStateBilling(e.target.value)}
+                label='State'
             />
             <FormInput
                 name='Billing Zip Code'

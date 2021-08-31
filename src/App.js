@@ -61,6 +61,7 @@ function App() {
                 />
 
                 <Route exact path='/shop' component={ShopPage} />
+
                 <PublicRoute
                     exact
                     restricted={false}

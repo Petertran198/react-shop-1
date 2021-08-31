@@ -3,6 +3,7 @@ import FormInput from '../../components/form-input/FormInput';
 import { useAuth } from '../../firebase/AuthContext';
 import { useHistory } from 'react-router';
 import { firestore } from '../../firebase/firebase-utils';
+import { Alert } from 'react-bootstrap';
 
 function EditProfile() {
     const history = useHistory();
@@ -36,6 +37,12 @@ function EditProfile() {
     });
 
     const [error, setError] = useState([]);
+    //If error scroll up the form
+    useEffect(() => {
+        if (error.length > 0) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, [error, setError]);
 
     // Takes in an object with the attribute and the value u want to change and change that portion of the profileInfo
     const handleChangeForAttributes = (changedAttr) => {
@@ -44,11 +51,12 @@ function EditProfile() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError([]);
         if (window.confirm('Are you sure you want to update profile?') == true) {
-            if (error.length > 0) {
-                //Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
+            if (profileInfo.password !== profileInfo.passwordConfirm) {
+                setError((err) => [...err, ' Password does not match']);
+            }
+            if (error.length < 0) {
                 try {
                     await updateUserProfile(profileInfo);
                     history.push('./');
@@ -59,10 +67,9 @@ function EditProfile() {
         }
     };
 
-    console.log(error);
     return (
         <>
-            {JSON.stringify(currentUser)}
+            {error && error.length != 0 && <Alert variant='danger'>{error}</Alert>}
             <form className='container'>
                 <h1 className='lead text-center border p-2 bg-light'>
                     Update Profile
@@ -168,7 +175,7 @@ function EditProfile() {
                     label='Password'
                 />
                 <FormInput
-                    type='text'
+                    type='password'
                     name='passwordConfirm'
                     required
                     value={profileInfo.passwordConfirm}

@@ -9,6 +9,12 @@ export default function PurchaseSuccessForm() {
     const cartItems = location.state.cartItems;
     const total = location.state.total;
 
+    const firstNameShipping = location.state.firstNameShipping;
+    const lastNameShipping = location.state.lastNameShipping;
+    const streetShipping = location.state.streetShipping;
+    const zipShipping = location.state.zipShipping;
+    const cityShipping = location.state.cityShipping;
+
     return (
         <>
             <Tabs
@@ -21,7 +27,12 @@ export default function PurchaseSuccessForm() {
                     asssss
                 </Tab>
                 <Tab eventKey='Shipping ' title='Shipping'>
-                    ffff
+                    <h1 className='lead'>Shipping Info</h1>
+                    <p>First Name: {firstNameShipping}</p>
+                    <p>Last Name: {firstNameShipping}</p>
+                    <p>Street {firstNameShipping}</p>
+                    <p>City {cityShipping}</p>
+                    <p>First Name: {firstNameShipping}</p>
                 </Tab>
                 <Tab eventKey='itemsInfo ' title='Items'>
                     <>

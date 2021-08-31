@@ -18,6 +18,8 @@ function FormUserInfo({
     city,
     setCity,
     setWhichFormToDisplay,
+    state,
+    setState,
 }) {
     console.log(firstName);
     return (
@@ -74,6 +76,14 @@ function FormUserInfo({
                 required
                 handleChange={(e) => setCity(e.target.value)}
                 label='City'
+            />{' '}
+            <FormInput
+                name='State'
+                type='text'
+                value={currentUser && currentUser.state ? currentUser.state : state}
+                required
+                handleChange={(e) => setState(e.target.value)}
+                label='State'
             />
             <FormInput
                 name='Zip Code'

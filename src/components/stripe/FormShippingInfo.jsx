@@ -12,13 +12,14 @@ export default function FormShippingInfo({
     setFirstNameShipping,
     lastNameShipping,
     setLastNameShipping,
-    setWhichFormToDisplay,
     streetShipping,
     setStreetShipping,
     zipShipping,
     setZipShipping,
     setCityShipping,
     cityShipping,
+    stateShipping,
+    setStateShipping,
 }) {
     const { cartItems, clearCart, total } = useCartContext();
     const history = useHistory();
@@ -73,6 +74,18 @@ export default function FormShippingInfo({
                 required
                 handleChange={(e) => setCityShipping(e.target.value)}
                 label='City'
+            />{' '}
+            <FormInput
+                name='State'
+                type='text'
+                value={
+                    currentUser && currentUser.stateShipping
+                        ? currentUser.stateShipping
+                        : stateShipping
+                }
+                required
+                handleChange={(e) => setCityShipping(e.target.value)}
+                label='State'
             />
             <FormInput
                 name='Zip Code'
@@ -86,7 +99,6 @@ export default function FormShippingInfo({
                 handleChange={(e) => setZipShipping(e.target.value)}
                 label='Zip Code'
             />
-
             {/* <CardElement options={CARD_OPTIONS} /> */}
             <button
                 className=' mb-3 btn btn-success btn-lg btn-block w-100'
@@ -97,6 +109,11 @@ export default function FormShippingInfo({
                         state: {
                             cartItems: cartItems,
                             total: total,
+                            firstNameShipping,
+                            lastNameShipping,
+                            streetShipping,
+                            zipShipping,
+                            cityShipping,
                         },
                     });
                     clearCart();

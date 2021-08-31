@@ -29,6 +29,10 @@ const CARD_OPTIONS = {
     },
 };
 function PaymentForm() {
+    //currentUser to fill form
+    const { currentUser } = useAuth();
+    // cartItem info
+    const { cartItems } = useCartContext();
     const stripe = useStripe();
     const elements = useElements();
 
@@ -38,29 +42,31 @@ function PaymentForm() {
         userShippingForm: false,
     });
     //Form user info state
-    const [emailInfo, setEmailInfo] = useState('');
+    const [emailInfo, setEmailInfo] = useState(
+        currentUser && currentUser.email ? currentUser.email : ''
+    );
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [street, setStreet] = useState('');
     const [zip, setZip] = useState('');
     const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+
     //Form billing info state
     const [firstNameBilling, setFirstNameBilling] = useState('');
     const [lastNameBilling, setLastNameBilling] = useState('');
     const [streetBilling, setStreetBilling] = useState('');
     const [zipBilling, setZipBilling] = useState('');
     const [cityBilling, setCityBilling] = useState('');
+    const [stateBilling, setStateBilling] = useState('');
     //Form Shipping info
     const [firstNameShipping, setFirstNameShipping] = useState('');
     const [lastNameShipping, setLastNameShipping] = useState('');
     const [streetShipping, setStreetShipping] = useState('');
     const [zipShipping, setZipShipping] = useState('');
     const [cityShipping, setCityShipping] = useState('');
+    const [stateShipping, setStateShipping] = useState('');
 
-    //currentUser to fill form
-    const { currentUser } = useAuth();
-    // cartItem info
-    const { cartItems } = useCartContext();
     const handleSubmit = async (event) => {
         // Block native form submission.
         event.preventDefault();
@@ -121,6 +127,8 @@ function PaymentForm() {
                             setCity={setCity}
                             city={city}
                             setWhichFormToDisplay={setWhichFormToDisplay}
+                            state={state}
+                            setState={setState}
                         />
                     )}
                     {whichFormToDisplay.userBillingForm === true && (
@@ -136,6 +144,8 @@ function PaymentForm() {
                             setZipBilling={setZipBilling}
                             setCityBilling={setCityBilling}
                             cityBilling={cityBilling}
+                            stateBilling={stateBilling}
+                            setStateBilling={setStateBilling}
                         />
                     )}
                     {whichFormToDisplay.userShippingForm === true && (
@@ -152,6 +162,8 @@ function PaymentForm() {
                             setZipShipping={setZipShipping}
                             setCityShipping={setCityShipping}
                             cityShipping={cityShipping}
+                            stateShipping={stateShipping}
+                            setStateShipping={setStateShipping}
                         />
                     )}
                 </div>

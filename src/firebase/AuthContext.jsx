@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth, createUserProfileDocument, firestore } from './firebase-utils';
-import firebase from 'firebase/app';
 import 'firebase/auth';
 
 const AuthContext = React.createContext();
@@ -81,6 +80,11 @@ export function AuthProvider({ children }) {
             .update(profile);
     };
 
+    const updateUserPassword = (newPass) => {
+        const user = auth.currentUser;
+        return user.updatePassword(newPass);
+    };
+
     const value = {
         currentUser,
         signOut,
@@ -88,6 +92,7 @@ export function AuthProvider({ children }) {
         getUsers,
         updateUserProfile,
         resetPassword,
+        updateUserPassword,
     };
 
     return (
